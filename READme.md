@@ -24,8 +24,7 @@ LearnToken is an educational contract that is made to practice the core concepts
 
 ```
 learntoken/
-├── contracts/
-│   └── project.sol
+├── project.sol
 └── README.md
 ```
 
