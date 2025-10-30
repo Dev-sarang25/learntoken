@@ -32,3 +32,10 @@ learntoken/
 ## License
 
 MIT License - feel free to use this project for learning and educational purposes.
+
+## contract image
+
+<img width="1920" height="1080" alt="Screenshot from 2025-10-30 15-19-50" src="https://github.com/user-attachments/assets/6ffe4b1d-3978-40a0-99b6-c44a7f7fe267" />
+
+
+
