@@ -2,9 +2,9 @@
 pragma solidity ^0.8.20;
 
 /**
- * @title LearnToken
- * @dev A simple ERC-20 token implementation for learning purposes
- * Demonstrates basic token functionality including:
+ * title LearnToken
+ * A simple ERC-20 token implementation for learning purposes
+ * This contract should demonstrates basic token functionality including:
  * - Minting tokens
  * - Transfers between accounts
  */
@@ -26,19 +26,19 @@ contract LearnToken {
     event Mint(address indexed to, uint256 amount);
 
     /**
-     * @dev Constructor sets the initial owner and mints initial supply
-     * @param _initialSupply The initial token supply (in tokens, not wei)
+     * Constructor sets the initial owner and mints initial supply
+     * para initialSupply The initial token supply (in tokens, not wei)
      */
     constructor(uint256 _initialSupply) {
         owner = msg.sender;
-        _mint(msg.sender, _initialSupply * 10 ** decimals);
+        _mint(msg.sender, _initialSupply * 10**decimals);
     }
 
     /**
-     * @dev Transfer tokens from sender to recipient
-     * @param _to The recipient address
-     * @param _value The amount to transfer
-     * @return success True if transfer succeeded
+     * Transfer tokens from sender to recipient
+     * para _to The recipient address
+     * para _value The amount to transfer
+     * return success True if transfer succeeded
      */
     function transfer(address _to, uint256 _value) public returns (bool success) {
         require(_to != address(0), "Cannot transfer to zero address");
@@ -50,36 +50,23 @@ contract LearnToken {
         emit Transfer(msg.sender, _to, _value);
         return true;
     }
-
+    
     /**
-     * @dev Public mint function (owner only)
-     * @param _to The recipient address
-     * @param _amount The amount to mint (in tokens, not wei)
-     */
-    function mint(address _to, uint256 _amount) public {
-        require(msg.sender == owner, "Only owner can mint");
-        _mint(_to, _amount * 10 ** decimals);
-    }
-
-    /**
-     * @dev Internal mint logic
-     * @param _to The recipient address
-     * @param _amount The amount to mint (already adjusted for decimals)
+     * Internal mint function
+     * para to The recipient address
+     * para amount The amount to mint
      */
     function _mint(address _to, uint256 _amount) internal {
-        require(_to != address(0), "Cannot mint to zero address");
-
         totalSupply += _amount;
         balanceOf[_to] += _amount;
-
         emit Mint(_to, _amount);
         emit Transfer(address(0), _to, _amount);
     }
 
     /**
-     * @dev Get the balance of an account
-     * @param _account The account to query
-     * @return balance The token balance
+     * Get the balance of an account
+     * para account The account to query
+     * return balance The token balance
      */
     function getBalance(address _account) public view returns (uint256 balance) {
         return balanceOf[_account];
