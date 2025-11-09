@@ -85,3 +85,7 @@ A player wins by:
 3. **Opponent times out** (fails to act within time limit)
 4. **Higher score** after all rounds complete (if no one hits a mine)
 
+### Image of Token
+
+
+<img width="1920" height="1080" alt="Screenshot from 2025-10-30 15-19-50" src="https://github.com/user-attachments/assets/fd238edf-97cf-4584-aeeb-d394cf47fb72" />
