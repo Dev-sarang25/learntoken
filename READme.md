@@ -85,16 +85,3 @@ A player wins by:
 3. **Opponent times out** (fails to act within time limit)
 4. **Higher score** after all rounds complete (if no one hits a mine)
 
-## Smart Contract Functions
-
-### Token Functions
-
-```solidity
-// Transfer tokens
-function transfer(address _to, uint256 _value) public returns (bool)
-
-// Mint new tokens (owner only)
-function mint(address _to, uint256 _amount) public onlyOwner returns (bool)
-
-// Get balance
-functi
