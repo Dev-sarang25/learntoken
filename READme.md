@@ -1,41 +1,100 @@
-# LearnToken 
+# LearnToken
 
-A simple ERC-20 token implementation built for learning Solidity and blockchain development.
+A Solidity smart contract that combines an ERC-20 token with an integrated competitive Minesweeper game for token holders.
 
 ## Overview
 
-LearnToken is an educational contract that is made to practice the core concepts of token creation on the Ethereum blockchain. This project implements the ERC-20 token standard features like  initialSupply, minting, and transfer of tokens.
+LearnToken is an educational ERC-20 token implementation that includes a unique on-chain Minesweeper game where two token holders can compete against each other in strategic mine placement and block revealing challenges.
 
-## Token Details
+## Token Features
 
+### Basic ERC-20 Functionality
 - **Name**: Learn Token
 - **Symbol**: LEARN
 - **Decimals**: 18
-- **Initial Supply**: Configurable at deployment
+- **Initial Supply**: Set at deployment
 
-## Features
+### Token Operations
+- ✅ Transfer tokens between accounts
+- ✅ Mint new tokens (owner only)
+- ✅ Check balances
+- ✅ Transfer ownership
 
-### Core ERC-20 Functionality
-- **Transfer**: Send tokens between addresses
-- **Balance Tracking**: Query token balances for any address
-- **Minting**: Owner can create new tokens
+## Minesweeper Game Rules
 
-## Project Structure
+### Prerequisites
+- Both players must hold LEARN tokens to participate
+- Players cannot play against themselves
 
-```
-learntoken/
-├── contracts
-   └── project.sol
-└── README.md
-```
+### Game Setup
+1. Any token holder can create a game by calling `createGame(opponentAddress)`
+2. Game ID is assigned automatically
+3. The board consists of 100 blocks (numbered 1-100)
 
-## License
+### Game Phases
 
-MIT License - feel free to use this project for learning and educational purposes.
+#### **Round Structure**
+The game progresses through 5 rounds with alternating mining and sweeping phases:
 
-## Contract image
+| Round | Mines to Place | Blocks to Reveal |
+|-------|---------------|------------------|
+| 1     | 10            | 5                |
+| 2     | 5             | 2                |
+| 3     | 2             | 1                |
+| 4     | 2             | 1                |
+| 5+    | 1             | 1                |
 
-<img width="1920" height="1080" alt="Screenshot from 2025-10-30 15-19-50" src="https://github.com/user-attachments/assets/6ffe4b1d-3978-40a0-99b6-c44a7f7fe267" />
+After round 5, the game ends and the winner is determined by score.
 
+#### **Mining Phase**
+- Each player has **5 minutes** to place their mines
+- Select block numbers between 1-100
+- Submit all mine positions at once via `placeMines(gameId, [blockNumbers])`
+- ⚠️ **Critical Rule**: Mining an already-mined block results in **instant loss**
 
+#### **Sweeping Phase**
+- Each player has **3 minutes** to reveal blocks
+- Choose blocks to reveal via `revealBlocks(gameId, [blockNumbers])`
+- 💣 Revealing a mined block results in **instant loss**
+- Safe reveals earn points based on distance to nearest mine
 
+### Scoring System
+
+When you reveal a safe block, you earn points:
+- **Score = 101 - distance to nearest mine**
+- Closer to mines = Higher risk = More points
+
+### Distance Messages
+
+When revealing safe blocks, you'll receive feedback:
+
+| Distance | Message |
+|----------|---------|
+| 1 | "CRITICAL - Mine adjacent!" |
+| 2-3 | "DANGER - Very close!" |
+| 4-5 | "Warning - Close proximity" |
+| 6-10 | "Caution - Mines nearby" |
+| 11-20 | "Moderate distance" |
+| 20+ | "Far from mines" |
+
+### Winning Conditions
+
+A player wins by:
+1. **Opponent hits a mine** during sweeping
+2. **Opponent mines an already-mined block**
+3. **Opponent times out** (fails to act within time limit)
+4. **Higher score** after all rounds complete (if no one hits a mine)
+
+## Smart Contract Functions
+
+### Token Functions
+
+```solidity
+// Transfer tokens
+function transfer(address _to, uint256 _value) public returns (bool)
+
+// Mint new tokens (owner only)
+function mint(address _to, uint256 _amount) public onlyOwner returns (bool)
+
+// Get balance
+functi
